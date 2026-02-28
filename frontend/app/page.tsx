@@ -118,10 +118,9 @@ export default function HomePage() {
   };
 
   const fetchRisk = async () => {
-    if (!RISK_API) { setRiskLabel("API not configured"); return; }
     setAiLoading(true); setRiskLabel("Analyzing…");
     try {
-      const res = await fetch(`${RISK_API}/risk/ai?collateral=${collateral}&borrow=${borrowed}`);
+      const res = await fetch(`/api/risk?collateral=${collateral}&borrow=${borrowed}`);
       const data = await res.json();
       if (data.advice) {
         setAiAdvice(data.advice);
