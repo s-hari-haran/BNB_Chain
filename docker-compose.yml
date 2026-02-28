@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  risk-service:
+    build:
+      context: ./backend
+    env_file:
+      - ./.env
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  automation-agent:
+    build:
+      context: ./backend
+    command: npm run watcher
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    depends_on:
+      - risk-service
