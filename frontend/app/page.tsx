@@ -18,9 +18,9 @@ declare global {
 }
 
 /* ── Contract addresses ── */
-const VAULT_ADDR = process.env.NEXT_PUBLIC_VAULT_ADDRESS || "";
-const ROUTER_ADDR = process.env.NEXT_PUBLIC_BORROW_ROUTER_ADDRESS || "";
-const RISK_API = process.env.NEXT_PUBLIC_RISK_API_URL || "";
+const VAULT_ADDR = (process.env.NEXT_PUBLIC_VAULT_ADDRESS || "").trim();
+const ROUTER_ADDR = (process.env.NEXT_PUBLIC_BORROW_ROUTER_ADDRESS || "").trim();
+const RISK_API = (process.env.NEXT_PUBLIC_RISK_API_URL || "").trim();
 const CHAIN_ID = 97;
 const SCAN = "https://testnet.bscscan.com/tx/";
 const BNB_PRICE = 400;
