@@ -64,10 +64,10 @@ export default function HomePage() {
     if (!wallet || !VAULT_ADDR || !ROUTER_ADDR || !window.ethereum) return;
     try {
       const signer = await getSigner();
-      const vault = new ethers.Contract(VAULT_ADDR, VAULT_ABI, signer);
-      const router = new ethers.Contract(ROUTER_ADDR, ROUTER_ABI, signer);
+      const vault = new ethers.Contract(ethers.getAddress(VAULT_ADDR), VAULT_ABI, signer);
+      const router = new ethers.Contract(ethers.getAddress(ROUTER_ADDR), ROUTER_ABI, signer);
       const c = await vault.getUserCollateral();
-      const b = await router.borrowed(wallet);
+      const b = await router.borrowed(ethers.getAddress(wallet));
       setCollateral(ethers.formatEther(c));
       setBorrowed(ethers.formatEther(b));
       const cNum = Number(ethers.formatEther(c));
@@ -96,7 +96,7 @@ export default function HomePage() {
   const doDeposit = async () => {
     setStatus("loading"); setStatusText("Submitting deposit…");
     const signer = await getSigner();
-    const vault = new ethers.Contract(VAULT_ADDR, VAULT_ABI, signer);
+    const vault = new ethers.Contract(ethers.getAddress(VAULT_ADDR), VAULT_ABI, signer);
     const tx = await vault.deposit({ value: ethers.parseEther("0.05") });
     setStatusText("Waiting for confirmation…");
     await tx.wait();
@@ -108,7 +108,7 @@ export default function HomePage() {
   const doBorrow = async () => {
     setStatus("loading"); setStatusText("Submitting borrow…");
     const signer = await getSigner();
-    const router = new ethers.Contract(ROUTER_ADDR, ROUTER_ABI, signer);
+    const router = new ethers.Contract(ethers.getAddress(ROUTER_ADDR), ROUTER_ABI, signer);
     const tx = await router.borrow(ethers.parseUnits("10", 18));
     setStatusText("Waiting for confirmation…");
     await tx.wait();
